@@ -1,0 +1,118 @@
+openapi: 3.0.1
+servers:
+  - url: https://uve.demo.ubirch.com:8443/
+    description: Universal Verification Endpoint- STAGING api server
+  - url: https://uve.ubirch.com/
+    description: Universal Verification Endpoint - PRODUCTION api server
+info:
+  title: Universal Verification Endpoint API
+  description: |
+    A universal verification endpoint for different types of certificates. For example the
+    [Digital Covid Certificate (DCC)](https://github.com/ehn-digital-green-development/ehn-dcc-schema)
+    conforming certificates.
+
+    ```
+    Copyright (C) 2021 ubirch GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    ```
+
+  version: 1.0.0
+  license:
+    name: 'Apache License, Version 2.0'
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+  contact:
+    name: UBIRCH GmbH
+    url: https://ubirch.com
+    email: uve-support@ubirch.com
+
+paths:
+  /api/uve/v1/verify:
+    post:
+      tags:
+        - Verification
+      summary: Verify a certificate for validity.
+      description: |
+        # Description
+
+        Checks the signature and verifies the validity of a
+        [Digital Covid Certificate (DCC)](https://github.com/ehn-digital-green-development/ehn-dgc-schema/).
+      requestBody:
+        description: >-
+          The binary or encoded representation of a certificate.
+        content:
+          application/cbor+base45:
+            schema:
+              $ref: '#/components/schemas/CertificateEncoded'
+          application/cbor:
+            schema:
+              $ref: '#/components/schemas/CertificateBinary'
+#          application/pdf:
+#            schema:
+#              $ref: '#/components/schemas/CertificationPDF'
+      responses:
+        '200':
+          description: Certificate is valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigicalCovidCertificate'
+        '400':
+          description: Invalid certificate
+        '401':
+          description: Authentication Failure (Credential missing)
+        '403':
+          description: Forbidden (Invalid Credentials)
+        '406':
+          description: Incorrect data model
+        '500':
+          description: Internal Server Error
+      security:
+        - AppBearerToken: [ ]
+
+components:
+  schemas:
+    DigicalCovidCertificate:
+      '$ref': 'schema/DCC.combined-schema.json'
+
+    CertificateEncoded:
+      description: >-
+        Base45 encoded and compressed Digital Green Certificate (DGC) according to EU specification. An encoded
+        certificate can be directly rendered as a QR code according to the EU specification.
+      type: string
+      format: base45
+      example: "HC1:6BFOXN*TS0BI$ZD4N9:9S6RCVN5+O30K3/XIV0W23NTDEMWK4MI6UOS03CR83KLBKAVN74.CL91/8K6%KEG3983NS9SVBHABVCNN95SWMPHQUHQN%A400H%UBT16Y51Y9AT1:+P6YBKD0:XB7NGJQOIS7I$H%T5+XO8YJMVHBZJF 9NSG:PICIG%*47%S%*48YIZ73423ZQT-EJDG3XW44$22CLY.IE.KD+2H0D3ZCU7JI$2K3JQH5-Y3$PA$HSCHBI I7995R5ZFQETU 9R*PP:+P*.1D9RYO05QD/8D3FC:XIBEIVG395EP1E+WEDJL8FF3DE0OA0D9E2LBHHNHL$EQ+-CVYCMBB:AV5AL5:4A93MOJLWT.C3FDA.-B97U: KMZNKASADIMKN2GFLF9$HF.3O.X21FDLW4L4OVIOE1M24OR:FTNP8EFVMP9/HWKP/HLIJL8JF8JF172OTTHO9YW2E6LS7WGYNDDSHRSFXT*LMK8P*G8QWD8%P%5GPPMEVMTHDBESW2L.TN8BBBDR9+JLDR/1JGIF8BS0IKT8LB1T7WLA:FI%JI50H:EK1"
+
+    CertificateBinary:
+      description: >-
+        Binary representation of the Digital Green Certificate (DGC) according to EU specification.
+        This is a pure CBOR Web Token (CWT) without compression and encoding and HC1: prefix.
+      type: string
+      format: binary
+      example: "<CBOR Web Token>"
+
+    CertificationPDF:
+      description: >-
+        A rendered PDF document containing the certificate information including a
+        Digital Green Certificate (DGC) QR Code according to EU specification.
+      type: string
+      format: binary
+      example: "<PDF>"
+
+  securitySchemes:
+    AppBearerToken:
+      type: http
+      description: >-
+        Authentication is based on a bearer token
+      scheme: bearer
+      bearerFormat: JWT
