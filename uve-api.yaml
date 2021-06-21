@@ -41,11 +41,11 @@ paths:
     post:
       tags:
         - Verification
-      summary: Verify a certificate for validity.
+      summary: Verify a certificate for authenticity.
       description: |
         # Description
 
-        Checks the signature and verifies the validity of a
+        Checks the signature and verifies the authenticity of a
         [Digital Covid Certificate (DCC)](https://github.com/ehn-digital-green-development/ehn-dgc-schema/).
       requestBody:
         description: >-
@@ -62,23 +62,23 @@ paths:
 #              $ref: '#/components/schemas/CertificationPDF'
       responses:
         '200':
-          description: Certificate is valid.
+          description: Certificate is authentic.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/DigicalCovidCertificate'
         '400':
           description: Invalid certificate
-        '401':
-          description: Authentication Failure (Credential missing)
+#        '401':
+#          description: Authentication Failure (Credential missing)
         '403':
           description: Forbidden (Invalid Credentials)
         '406':
           description: Incorrect data model
         '500':
           description: Internal Server Error
-      security:
-        - AppBearerToken: [ ]
+#      security:
+#        - AppBearerToken: [ ]
 
 components:
   schemas:
@@ -87,7 +87,7 @@ components:
 
     CertificateEncoded:
       description: >-
-        Base45 encoded and compressed Digital Green Certificate (DGC) according to EU specification. An encoded
+        Base45 encoded and compressed Digital Corona Certificate (DCC) according to EU specification. An encoded
         certificate can be directly rendered as a QR code according to the EU specification.
       type: string
       format: base45
@@ -95,24 +95,24 @@ components:
 
     CertificateBinary:
       description: >-
-        Binary representation of the Digital Green Certificate (DGC) according to EU specification.
+        Binary representation of the Digital Corona Certificate (DCC) according to EU specification.
         This is a pure CBOR Web Token (CWT) without compression and encoding and HC1: prefix.
       type: string
       format: binary
       example: "<CBOR Web Token>"
 
-    CertificationPDF:
-      description: >-
-        A rendered PDF document containing the certificate information including a
-        Digital Green Certificate (DGC) QR Code according to EU specification.
-      type: string
-      format: binary
-      example: "<PDF>"
-
-  securitySchemes:
-    AppBearerToken:
-      type: http
-      description: >-
-        Authentication is based on a bearer token
-      scheme: bearer
-      bearerFormat: JWT
+#    CertificationPDF:
+#      description: >-
+#        A rendered PDF document containing the certificate information including a
+#        Digital Green Certificate (DGC) QR Code according to EU specification.
+#      type: string
+#      format: binary
+#      example: "<PDF>"
+#
+#  securitySchemes:
+#    AppBearerToken:
+#      type: http
+#      description: >-
+#        Authentication is based on a bearer token
+#      scheme: bearer
+#      bearerFormat: JWT
