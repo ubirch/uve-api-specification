@@ -83,7 +83,7 @@ paths:
 components:
   schemas:
     DigicalCovidCertificate:
-      '$ref': 'schema/DCC.combined-schema.json'
+      '$ref': 'https://github.com/ehn-dcc-development/ehn-dcc-schema/DCC.combined-schema.json'
 
     CertificateEncoded:
       description: >-
