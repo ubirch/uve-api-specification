@@ -63,8 +63,6 @@ paths:
                 $ref: '#/components/schemas/DigicalCovidCertificate'
         '400':
           description: Invalid certificate
-        '403':
-          description: Forbidden (Invalid Credentials)
         '406':
           description: Incorrect data model
         '500':
