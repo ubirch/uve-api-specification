@@ -1,9 +1,7 @@
 openapi: 3.0.1
 servers:
-  - url: https://uve.demo.ubirch.com:8443/
-    description: Universal Verification Endpoint- STAGING api server
-  - url: https://uve.ubirch.com/
-    description: Universal Verification Endpoint - PRODUCTION api server
+  - url: http://localhost:5000/
+    description: Universal Verification Endpoint
 info:
   title: Universal Verification Endpoint API
   description: |
