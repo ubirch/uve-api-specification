@@ -1,16 +1,16 @@
 openapi: 3.0.1
 servers:
   - url: https://api.uve.demo.ubirch.com:8443/
-    description: Universal Verification Endpoint- STAGING api server
+    description: Universal Verification Endpoint - STAGING api server
 info:
   title: Universal Verification Endpoint API
   description: |
-    A universal verification endpoint for different types of certificates. For example the
+    A universal verification endpoint for different types of digital health certificates. For example the
     [Digital Covid Certificate (DCC)](https://github.com/ehn-digital-green-development/ehn-dcc-schema)
     conforming certificates.
 
     ```
-    Copyright (C) 2021 ubirch GmbH
+    Copyright (C) 2021 UBIRCH GmbH
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ paths:
     post:
       tags:
         - Verification
-      summary: Verify a certificate for authenticity.
+      summary: Verify a digital health certificate for authenticity.
       description: |
         # Description
 
@@ -58,7 +58,7 @@ paths:
               description: An (optional) random tag used for accounting specified by the user. 
               schema: 
                 type: string
-              example: "AirportCheckIn42"
+              example: "HAM-Termninal-1"
               required: false
       requestBody:
         description: >-
