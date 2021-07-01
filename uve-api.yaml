@@ -1,7 +1,7 @@
 openapi: 3.0.1
 servers:
   - url: https://api.uve.demo.ubirch.com:8443/
-    description: Universal Verification Endpoint - STAGING api server
+    description: Universal Verification Endpoint - STAGING api server. Works only with DCCs signed with DEMO keys. 
 info:
   title: Universal Verification Endpoint API
   description: |
