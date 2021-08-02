@@ -1,7 +1,9 @@
 # Universal Verification Endpoint (UVE)
 
-The universal verification endpoint (UVE) unifies the verification and validation
-of digitial certificates.
+The Universal Verification Endpoint (UVE) unifies the verification and validation
+of EU Digital Covid Certificates (DCC).
+
+To learn more, please contact [support@ubirch.com](mailto:support@ubirch.com). 
 
 ## Copyright
 
