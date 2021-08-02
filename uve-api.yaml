@@ -1,13 +1,13 @@
 openapi: 3.0.1
 servers:
-  - url: 'https://api.uve.demo.ubirch.com:8443/'
-    description: Universal Verification Endpoint - STAGING api server. Works only with DCCs signed with DEMO keys.
+  - url: 'https://api.uve.demo.ubirch.com/'
+    description: Universal Verification Endpoint - STAGING API server. Works only with DCCs signed with DEMO keys.
+  - url: 'https://api.uve.ubirch.com/'
+    description: Universal Verification Endpoint - PRODUCTION API server.
 info:
   title: Universal Verification Endpoint API
   description: |
-    A universal verification endpoint for different types of digital health certificates. For example the
-    [Digital Covid Certificate (DCC)](https://github.com/ehn-digital-green-development/ehn-dcc-schema)
-    conforming certificates.
+    Universal Verification Endpoint (UVE) to verify EU Digital Covid Certificates (DCC).
 
     ```
     Copyright (C) 2021 UBIRCH GmbH
@@ -41,8 +41,9 @@ paths:
       description: |
         # Description
 
-        Checks the signature and verifies the authenticity of a
-        [Digital Covid Certificate (DCC)](https://github.com/ehn-digital-green-development/ehn-dgc-schema/).
+        Checks the signature and verifies the authenticity of a Digital Covid Certificate (DCC).
+
+        Requires mTLS-authentication with a X509 certificate.
       parameters:
         - in: header
           name: X-Transaction-Id
@@ -62,7 +63,7 @@ paths:
             type: string
           in: header
           name: X-Forwarded-Tls-Client-Cert
-          description: X509 pem string. It has to be a chained certificate as comma-separated string
+          description: X509 pem string. It has to be a chained certificate as comma-separated string.
       requestBody:
         description: The encoded representation of a certificate.
         content:
