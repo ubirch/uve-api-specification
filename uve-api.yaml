@@ -123,7 +123,7 @@ paths:
         - in: header
           name: X-Validate-For
           description: |
-            A comma-separated value of the countries to check. If no values or header is provided, DE is assumed by default.
+            A comma-separated value of the countries to check. If no values or header is provided, All supported countries will be checked.
 
             The list of supported countries is:
 
@@ -131,7 +131,7 @@ paths:
           schema:
             type: string
           example: DE,FR
-          required: true
+          required: false
         - schema:
             type: string
           in: header
