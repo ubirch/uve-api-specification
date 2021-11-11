@@ -54,10 +54,20 @@ paths:
           required: true
         - in: header
           name: X-Transaction-Tag
-          description: An (optional) random tag used for accounting specified by the user.
+          description: An optional random tag used for accounting specified by the user.
           schema:
             type: string
           example: HAM-Termninal-1
+          required: false
+        - in: header
+          name: X-Verify-For
+          description: |
+            An optional value that specifies the jurisdiction to check. It supports EU and NHS.
+            If no value or header is provided, EU is assumed by default. The accepted values are EU or NHS.
+          schema:
+            type: string
+            enum: [EU, NHS]
+          example: NHS
           required: false
         - schema:
             type: string
