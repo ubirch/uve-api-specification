@@ -214,6 +214,13 @@ paths:
           in: header
           name: X-Forwarded-Tls-Client-Cert
           description: X509 pem string. It has to be a chained certificate as comma-separated string.
+        - in: header
+          name: X-Date-To-Check
+          description: An optional date in the future that is additionally used for testing the validity of the cryptograhic date.
+          schema:
+            type: string
+          example: yyyy-MM-dd
+          required: false
       requestBody:
         description: The encoded representation of a certificate.
         content:
@@ -309,10 +316,26 @@ components:
     CertificatePayloadValidationResponseComposed:
       type: string
       format: json
-      ##TODO: Check how to ref other schema
       example: {
-        "dcc:": '$ref: schema/DCC.combined-schema.json',
-        "authenticated": true,
+        "dcc:": {
+          "v":[
+            {
+              "dn":3,
+              "dt":"2021-04-14",
+              "id":"8888888",
+              "ma":"ORG-100001699",
+              "mp":"EU/1/20/1528",
+              "sd":2,
+              "tg":"840539006",
+              "vp":"1119305005"
+            }
+          ],
+          "dob":"1979",
+          "nam":{
+            "fn":"MüllèČÇ",
+            "gn":"Eriká"
+          }
+        },
         "validatedFor": {
           "DE": true,
           "FR": false
