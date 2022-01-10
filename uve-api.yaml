@@ -344,10 +344,20 @@ components:
     CertificatePayloadValidationResponse:
       type: string
       format: json
-      example: {
-        "DE": true,
-        "FR": false
-      }
+      example: [
+        {
+          "country": "DE",
+          "current": {
+            "result": "Accepted"
+          }
+        },
+        {
+          "country": "FR",
+          "current": {
+            "result": "Accepted"
+          }
+        }
+      ]
     CertificatePayloadValidationV2:
       type: string
       format: json
