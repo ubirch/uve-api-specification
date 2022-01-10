@@ -264,9 +264,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CertificatePayloadValidationResponseComposed'
+                $ref: '#/components/schemas/CertificatePayloadValidationV2'
         '400':
-          description: Invalid certificate
+          description: Invalid certificate, or invalid simple owner check, or invalid parameters.
+        '403':
+          description: Forbidden.
+        '406':
+          description: Incorrect data modelIncorrect data model
         '500':
           description: Internal Server Error
   /api/uve/v1/register-bootstrap-token:
@@ -344,7 +348,7 @@ components:
         "DE": true,
         "FR": false
       }
-    CertificatePayloadValidationResponseComposed:
+    CertificatePayloadValidationV2:
       type: string
       format: json
       example: {
