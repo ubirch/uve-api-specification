@@ -165,9 +165,12 @@ paths:
         Checks the signature, expiration time, and verifies the authenticity of a Digital Covid Certificate (DCC), and validates
         the Certificate payload against a list of rules which vary per country.
 
+        This endpoint provides the ability to perform a simple owner check based on the transliterated values of the person's names and datebirth.
+
         The rules are obtained from the EU-Gateway, which are published at [https://distribution.dcc-rules.de/rules](https://distribution.dcc-rules.de/rules)
 
         Requires mTLS-authentication with a X509 certificate.
+        Maximum allowed data size of incoming CBOR is 1500 bytes.
       parameters:
         - in: header
           name: X-Transaction-Id
@@ -219,7 +222,7 @@ paths:
           description: An optional date in the future that is additionally used for testing the validity of the cryptograhic date.
           schema:
             type: string
-          example: yyyy-MM-dd
+          example: 2022-02-02
           required: false
         - in: query
           name: verbose
@@ -228,8 +231,29 @@ paths:
             type: boolean
           example: true
           required: false
+        - in: query
+          name: fnt
+          description: It specifies the transliterated family name of the person for simple owner check. Data must be provided as in the certificate.
+          schema:
+            type: string
+          example: DIESSNER<MUSTERFRAU
+          required: false
+        - in: query
+          name: gnt
+          description: It specifies the transliterated given name of the person for simple owner check. Data must be provided as in the certificate.
+          schema:
+            type: string
+          example: ERIKA<DOERTE
+          required: false
+        - in: query
+          name: dob
+          description: It specifies the birth date of the person for simple owner check. Data must be provided as in the certificate.
+          schema:
+            type: string
+          example: 1970-01-01
+          required: false
       requestBody:
-        description: The encoded representation of a certificate.
+        description: The encoded representation of a certificate. Maximum allowed data size of incoming CBOR is 1500 bytes.
         content:
           application/cbor+base45:
             schema:
