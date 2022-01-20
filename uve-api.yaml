@@ -31,7 +31,7 @@ info:
   contact:
     name: UBIRCH GmbH
     url: 'https://ubirch.com'
-    email: uve-support@ubirch.com
+    email: support@ubirch.com
 paths:
   /api/uve/v2/verify:
     post:
