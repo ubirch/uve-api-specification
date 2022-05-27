@@ -1,13 +1,13 @@
 openapi: 3.0.1
 servers:
   - url: 'https://api.uve.demo.ubirch.com/'
-    description: Universal Verification Endpoint - STAGING API server. Works only with DCCs signed with DEMO keys.
+    description: Universal Verification Endpoint - STAGING API server. Verifies only data from demo/test environment.
   - url: 'https://api.uve.ubirch.com/'
     description: Universal Verification Endpoint - PRODUCTION API server.
 info:
   title: Universal Verification Endpoint API
   description: |
-    Universal Verification Endpoint (UVE) to verify EU Digital COVID Certificates (DCC).
+    Universal Verification Endpoint (UVE)
 
     ```
     Copyright (C) 2022 UBIRCH GmbH
@@ -33,19 +33,6 @@ info:
     url: 'https://ubirch.com'
     email: support@ubirch.com
 paths:
-  /api/uve/v3/jwk:
-    get:
-      tags:
-        - Verification
-      summary: Returns the public key used to verify signatures in jwk format
-      description: returns the jwk for the current signatures verification
-      responses:
-        '200':
-          description: Public key is available
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JWKOfPublicKey'
   /api/uve/v3/verify:
     post:
       tags:
@@ -77,7 +64,10 @@ paths:
         **CryptographicallyExpired**: If the given DCC cryptographically expired.
 
         ## Ukrainian ePassport Verification
-        Checks the signature, expiration time, and verifies the authenticity of an Ukrainian ePassport
+        Checks the signature, expiration time, and verifies the authenticity of an Ukrainian ePassport.
+
+        To verify Ukrainian ePassports, set the header `X-Dc-Type` to `DIC` and `X-Verify-For` to `UA`.
+
 
         ## Authentication
         Requires mTLS-authentication with a X509 certificate.
@@ -127,9 +117,9 @@ paths:
         - in: header
           name: X-Dc-Type
           description: |
-            An optional value that specifies the certificate type to check.
-            It supports: DCC and DIC.
-            If no value or header is provided, DCC is assumed
+            An optional value that specifies the certificate type to be checked.
+            Supported values are `DCC` for Digital COVID Certificates and `DIC` for Ukrainian ePassports.
+            If no value or header is provided, DCC is assumed.
           schema:
             type: string
             enum: [ DCC, DIC ]
@@ -197,6 +187,19 @@ paths:
           description: Incorrect data modelIncorrect data model
         '500':
           description: Internal Server Error
+  /api/uve/v3/jwk:
+    get:
+      tags:
+        - Verification of UVE API responses
+      summary: Verify responses from the UVE API using a public key provided by this endpoint
+      description: Returns the public key as jwk to verify API responses from the `api/uve/v3` endpoint(s)
+      responses:
+        '200':
+          description: Public key is available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWKOfPublicKey'
   /api/uve/v2/verify:
     post:
       tags:
